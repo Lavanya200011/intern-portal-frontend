@@ -31,6 +31,8 @@ function Login({ onLogin }) {
   };
 
   return (
+  <div>
+   <h4 className="login-instruction">enter name as (lavanya or rahul or rohit)</h4>
     <div className="login-container">
       <h2 className="login-heading">Login</h2>
       <form className="login-form" onSubmit={handleSubmit}>
@@ -44,6 +46,7 @@ function Login({ onLogin }) {
         <button className="login-button" type="submit">Login</button>
         {error && <p className="login-error">{error}</p>}
       </form>
+    </div>
     </div>
   );
 }
