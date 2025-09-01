@@ -32,7 +32,7 @@ function Login({ onLogin }) {
 
   return (
   <div>
-   <h4 className="login-instruction">enter name as (lavanya or rahul or rohit)</h4>
+   <h4 className="login-instruction">enter name as (lavanya or rahul or rohit)hello</h4>
     <div className="login-container">
       <h2 className="login-heading">Login</h2>
       <form className="login-form" onSubmit={handleSubmit}>
