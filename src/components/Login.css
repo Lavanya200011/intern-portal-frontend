@@ -12,7 +12,7 @@
 
 .login-instruction{
   background-color: #19d5bc;
-  color: #ffffff;
+  color: blue;
   border-radius: 6px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   
@@ -28,6 +28,7 @@
 .login-form {
   display: flex;
   flex-direction: column;
+
 }
 
 .login-input {
@@ -51,4 +52,12 @@
 
 .login-button:hover {
   background-color: #0c1e58;
+}
+
+.login-error{
+  color:#1f2021;
+}
+
+.login-message{
+  color:#090e37;
 }
