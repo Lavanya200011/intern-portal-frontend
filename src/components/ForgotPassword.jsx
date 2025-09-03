@@ -1,30 +1,27 @@
 // src/components/ForgotPassword.jsx
-import React, { useState } from "react";
-import "./Login.css";
+import React, { useState } from 'react';
+import './Login.css';
 
 function ForgotPassword({ onBack }) {
-  const [username, setUsername] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [step, setStep] = useState(1); // 1=enter username, 2=reset password
-  const [message, setMessage] = useState("");
+  const [username, setUsername] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [step, setStep] = useState(1); // 1 = check user, 2 = reset password
+  const [message, setMessage] = useState('');
 
   // Step 1: Check if username exists
-  const handleUsernameSubmit = async (e) => {
+  const handleCheckUser = async (e) => {
     e.preventDefault();
-    if (!username.trim()) return;
-
     try {
       const res = await fetch("https://intern-portal-backend-yin4.onrender.com/api/reset-password-check", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username }),
+        body: JSON.stringify({ username })
       });
 
       const data = await res.json();
-
       if (res.ok && data.success) {
-        setStep(2); // Move to reset password step
-        setMessage("User found. Please enter a new password.");
+        setStep(2); // move to next step
+        setMessage('');
       } else {
         setMessage("User not found!");
       }
@@ -33,25 +30,21 @@ function ForgotPassword({ onBack }) {
     }
   };
 
-  // Step 2: Reset password
-  const handlePasswordReset = async (e) => {
+  // Step 2: Update password
+  const handleResetPassword = async (e) => {
     e.preventDefault();
-    if (!newPassword.trim()) return;
-
     try {
-      const res = await fetch("http://localhost:5000/api/reset-password", {
+      const res = await fetch("https://intern-portal-backend-yin4.onrender.com/api/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, newPassword }),
+        body: JSON.stringify({ username, newPassword })
       });
 
       const data = await res.json();
-
       if (res.ok && data.success) {
-        setMessage("Password updated successfully! Please login again.");
-        setTimeout(onBack, 2000); // go back to login after 2 sec
+        setMessage("Password updated successfully! Go back to login.");
       } else {
-        setMessage("Failed to update password.");
+        setMessage(data.message || "Error updating password");
       }
     } catch (err) {
       setMessage("Something went wrong. Try again.");
@@ -62,8 +55,8 @@ function ForgotPassword({ onBack }) {
     <div className="login-container">
       <h2 className="login-heading">Forgot Password</h2>
 
-      {step === 1 ? (
-        <form className="login-form" onSubmit={handleUsernameSubmit}>
+      {step === 1 && (
+        <form className="login-form" onSubmit={handleCheckUser}>
           <input
             className="login-input"
             type="text"
@@ -71,12 +64,12 @@ function ForgotPassword({ onBack }) {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-          <button className="login-button" type="submit">
-            Submit
-          </button>
+          <button className="login-button" type="submit">Next</button>
         </form>
-      ) : (
-        <form className="login-form" onSubmit={handlePasswordReset}>
+      )}
+
+      {step === 2 && (
+        <form className="login-form" onSubmit={handleResetPassword}>
           <input
             className="login-input"
             type="password"
@@ -84,9 +77,7 @@ function ForgotPassword({ onBack }) {
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
           />
-          <button className="login-button" type="submit">
-            Reset Password
-          </button>
+          <button className="login-button" type="submit">Reset Password</button>
         </form>
       )}
 
