@@ -14,7 +14,7 @@ function ForgotPassword({ onBack }) {
     if (!username.trim()) return;
 
     try {
-      const res = await fetch("https://intern-portal-backend-yin4.onrender.com/api/reset-password", {
+      const res = await fetch("https://intern-portal-backend-yin4.onrender.com/api/reset-password-check", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username }),
